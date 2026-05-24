@@ -13,6 +13,11 @@ public class TestController {
 		return "Welcome to KrishiMitra";
 	}
 	
+	   @GetMapping("/farm/test")
+	    public String test1() {
+
+	        return "JWT Working Successfully";
+	    }
 	
 
 }
