@@ -1,22 +1,38 @@
 package com.example.KrishiMitra.controller;
 
-import org.springframework.web.bind.annotation.
-GetMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.
-RequestMapping;
-
-import org.springframework.web.bind.annotation.
-RestController;
+import com.example.KrishiMitra.dto.*;
+import com.example.KrishiMitra.service.*;
 
 @RestController
 @RequestMapping("/api/farm")
 
 public class FarmController {
 
-    @GetMapping("/dashboard")
-    public String farmerDashboard() {
+    @Autowired
+    private WeatherService
+            weatherService;
 
-        return "Welcome Farmer";
+    @Autowired
+    private FarmRuleService
+            ruleService;
+
+    @PostMapping("/advice")
+    public FarmAdviceResponse
+    getAdvice(
+            @RequestBody
+            FarmRequest request) {
+
+        String weather =
+                weatherService
+                        .getWeather(
+                                request.getCity());
+
+        return ruleService
+                .getRecommendation(
+                        request,
+                        weather);
     }
 }
